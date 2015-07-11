@@ -16,8 +16,8 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
-@Mod(modid=ForgeUnisMod.MODID, name=ForgeUnisMod.MODNAME, version=ForgeUnisMod.MODVER) //Tell forge "Oh hey, there's a new mod here to load."
-public class ForgeUnisMod
+@Mod(modid=ForgeMultiMod.MODID, name=ForgeMultiMod.MODNAME, version=ForgeMultiMod.MODVER) //Tell forge "Oh hey, there's a new mod here to load."
+public class ForgeMultiMod
 {
     //Set the ID of the mod (Should be lower case).
     public static final String MODID = "forge_uni";
@@ -26,8 +26,8 @@ public class ForgeUnisMod
     //Set the version of the mod.
     public static final String MODVER = "0.0.0";
 
-    @Instance(value = ForgeUnisMod.MODID) //Tell Forge what instance to use.
-    public static ForgeUnisMod instance;
+    @Instance(value = ForgeMultiMod.MODID) //Tell Forge what instance to use.
+    public static ForgeMultiMod instance;
        
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
