@@ -5,19 +5,19 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.DimensionManager;
 
-public class ForgeUnisCommand extends CommandBase
+public class ForgeMultiCommand extends CommandBase
 {
 
 	@Override
 	public String getCommandName()
 	{
-		return "fuc";
+		return "fmc";
 	}
 
 	@Override
 	public String getCommandUsage(ICommandSender icommandsender)
 	{
-		return "fuc <options>";
+		return "fmc <options>";
 	}
 
 	@Override

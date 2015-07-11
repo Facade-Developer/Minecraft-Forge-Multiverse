@@ -20,9 +20,9 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 public class ForgeMultiMod
 {
     //Set the ID of the mod (Should be lower case).
-    public static final String MODID = "forge_uni";
+    public static final String MODID = "forge_multi";
     //Set the "Name" of the mod.
-    public static final String MODNAME = "Forge Universe Mod";
+    public static final String MODNAME = "Forge Multiverse Mod";
     //Set the version of the mod.
     public static final String MODVER = "0.0.0";
 
@@ -75,7 +75,7 @@ public class ForgeMultiMod
     public void serverStart(FMLServerStartingEvent event)
     {
 		ServerCommandManager abc = (ServerCommandManager)(MinecraftServer.getServer().getCommandManager());
-		abc.registerCommand(new ForgeUnisCommand());
+		abc.registerCommand(new ForgeMultiCommand());
 		try
 		{
 			MinecraftServer mc = MinecraftServer.getServer();
