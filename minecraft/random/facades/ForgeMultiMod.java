@@ -42,22 +42,11 @@ public class ForgeMultiMod
 			Field privie = Loader.class.getDeclaredField("canonicalModsDir");
 			privie.setAccessible(true);
 			dir = (File)(privie.get(ld));
-			int id = -700;
 			for(File ls : dir.listFiles())
 			{
 				if(ls.getName().startsWith("uni_"))
 				{
-					String nm = ls.getName().substring(4);
-					System.out.println(nm);
-					while(DimensionManager.isDimensionRegistered(id)) id--;
-			    	Property val = config.get(nm, "nt_id", id);
-			    	DimensionManager.registerDimension(val.getInt(), -1);
-					while(DimensionManager.isDimensionRegistered(id)) id--;
-			    	val = config.get(nm, "ow_id", id);
-			    	DimensionManager.registerDimension(val.getInt(), 0);
-					while(DimensionManager.isDimensionRegistered(id)) id--;
-			    	val = config.get(nm, "end_id", id);
-			    	DimensionManager.registerDimension(val.getInt(), 1);
+					// Need to do stuff here
 				}
 			}
 		} catch (Exception e)
@@ -85,4 +74,9 @@ public class ForgeMultiMod
 		} catch (Exception e)
 		{ e.printStackTrace(); }
     }
+	
+	public static getWorldServer(EntityPlayerMP plyr, int dimID)
+	{
+		
+	}
 }

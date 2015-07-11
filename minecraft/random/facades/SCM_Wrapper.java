@@ -2,7 +2,7 @@ package random.facades;
 
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.world.Teleporter;
+import net.minecraft.world1.Teleporter;
 
 public class SCM_Wrapper extends ServerConfigurationManager
 {
@@ -28,33 +28,39 @@ public class SCM_Wrapper extends ServerConfigurationManager
         { e.printStackTrace(); }
     }
 
-    public void transferPlayerToDimension(EntityPlayerMP par1EntityPlayerMP, int par2)
+    public void transferPlayerToDimension(EntityPlayerMP plyr, int dim2)
     {
-        transferPlayerToDimension(par1EntityPlayerMP, par2, ForgeMultiMod.getWorldServer(par1EntityPlayerMP, par2).getDefaultTeleporter());
+        transferPlayerToDimension(plyr, dim2, ForgeMultiMod.getWorldServer(plyr, dim2).getDefaultTeleporter());
     }
-    public void transferPlayerToDimension(EntityPlayerMP par1EntityPlayerMP, int par2, Teleporter teleporter)
+	
+    public void transferPlayerToDimension(EntityPlayerMP plyr, int dim2, Teleporter tp)
     {
-        int j = par1EntityPlayerMP.dimension;
-        WorldServer worldserver = ForgeMultiMod.getWorldServer(par1EntityPlayerMP, par1EntityPlayerMP.dimension);
-        par1EntityPlayerMP.dimension = par2;
-        WorldServer worldserver1 = ForgeMultiMod.getWorldServer(par1EntityPlayerMP, par1EntityPlayerMP.dimension);
-        par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet9Respawn(par1EntityPlayerMP.dimension, (byte)par1EntityPlayerMP.worldObj.difficultySetting, worldserver1.getWorldInfo().getTerrainType(), worldserver1.getHeight(), par1EntityPlayerMP.theItemInWorldManager.getGameType()));
-        worldserver.removePlayerEntityDangerously(par1EntityPlayerMP);
-        par1EntityPlayerMP.isDead = false;
-        this.transferEntityToWorld(par1EntityPlayerMP, j, worldserver, worldserver1, teleporter);
-        this.func_72375_a(par1EntityPlayerMP, worldserver);
-        par1EntityPlayerMP.playerNetServerHandler.setPlayerLocation(par1EntityPlayerMP.posX, par1EntityPlayerMP.posY, par1EntityPlayerMP.posZ, par1EntityPlayerMP.rotationYaw, par1EntityPlayerMP.rotationPitch);
-        par1EntityPlayerMP.theItemInWorldManager.setWorld(worldserver1);
-        this.updateTimeAndWeatherForPlayer(par1EntityPlayerMP, worldserver1);
-        this.syncPlayerInventory(par1EntityPlayerMP);
-        Iterator iterator = par1EntityPlayerMP.getActivePotionEffects().iterator();
+        int prevDim = plyr.dimension;
+        WorldServer world1 = ForgeMultiMod.getWorldServer(plyr, plyr.dimension);
+        plyr.dimension = dim2;
+        WorldServer world2 = ForgeMultiMod.getWorldServer(plyr, plyr.dimension);
+		
+        plyr.playerNetServerHandler.sendPacketToPlayer(new Packet9Respawn(
+				plyr.dimension, (byte)plyr.worldObj.difficultySetting, world2.getWorldInfo().getTerrainType(), 
+				world2.getHeight(), plyr.theItemInWorldManager.getGameType()));
+				
+        world1.removePlayerEntityDangerously(plyr);
+        plyr.isDead = false;
+        this.transferEntityToWorld(plyr, prevDim, world1, world2, tp);
+        this.func_72375_a(plyr, world1);
+        plyr.playerNetServerHandler.setPlayerLocation(plyr.posX, plyr.posY, plyr.posZ, plyr.rotationYaw, 
+													  plyr.rotationPitch);
+        plyr.theItemInWorldManager.setWorld(world2);
+        this.updateTimeAndWeatherForPlayer(plyr, world2);
+        this.syncPlayerInventory(plyr);
+        Iterator iterator = plyr.getActivePotionEffects().iterator();
 
         while (iterator.hasNext())
         {
             PotionEffect potioneffect = (PotionEffect)iterator.next();
-            par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet41EntityEffect(par1EntityPlayerMP.entityId, potioneffect));
+            plyr.playerNetServerHandler.sendPacketToPlayer(new Packet41EntityEffect(plyr.entityId, potioneffect));
         }
 
-        GameRegistry.onPlayerChangedDimension(par1EntityPlayerMP);
+        GameRegistry.onPlayerChangedDimension(plyr);
     }
 }

@@ -36,7 +36,7 @@ public class ForgeMultiCommand extends CommandBase
 				if(astring[0].equals("tp"))
 				{
 					int dim = Integer.parseInt(astring[1]);
-					System.out.println("fdc tp "+ dim);
+					System.out.println("fmc tp "+ dim);
 					plyr.mcServer.getConfigurationManager().transferPlayerToDimension(plyr, dim);
 					plyr.timeUntilPortal = plyr.getPortalCooldown();
 				}
@@ -45,7 +45,7 @@ public class ForgeMultiCommand extends CommandBase
 				 if(astring[0].equals("create"))
 				{
 					int a = Integer.parseInt(astring[1]), b = Integer.parseInt(astring[2]);
-					System.out.println("fdc create "+ a +" " + b);
+					System.out.println("fmc create "+ a +" " + b);
 					DimensionManager.registerDimension(a, b);
 				}
 			}
