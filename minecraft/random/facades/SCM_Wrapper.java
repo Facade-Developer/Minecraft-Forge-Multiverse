@@ -6,10 +6,31 @@ import net.minecraft.world.Teleporter;
 
 public class SCM_Wrapper extends ServerConfigurationManager
 {
+
+    /**
+     * Wrapper for MinecraftServer instance of ServerConfigurationManager
+     * Need to test every, EVERY, part of this code... like seriously... every part
+     */
+
+
+    public SCM_Wrapper(ServerConfigurationManager master)
+    {
+        try
+        {
+            Class clz = master.class;
+            Field[] flds = clz.getDeclaredFields();
+            for(Field priv : flds)
+            {
+                priv.setAccessible(true);
+                this.getClass().getField(priv.getName()).set(this,priv.get(master));
+            }
+        } catch( Exception e ) 
+        { e.printStackTrace(); }
+    }
+
     public void transferPlayerToDimension(EntityPlayerMP par1EntityPlayerMP, int par2)
     {
         transferPlayerToDimension(par1EntityPlayerMP, par2, ForgeMultiMod.getWorldServer(par1EntityPlayerMP, par2).getDefaultTeleporter());
-        
     }
     public void transferPlayerToDimension(EntityPlayerMP par1EntityPlayerMP, int par2, Teleporter teleporter)
     {

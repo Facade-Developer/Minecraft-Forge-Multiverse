@@ -76,5 +76,13 @@ public class ForgeMultiMod
     {
 		ServerCommandManager abc = (ServerCommandManager)(MinecraftServer.getServer().getCommandManager());
 		abc.registerCommand(new ForgeUnisCommand());
+		try
+		{
+			MinecraftServer mc = MinecraftServer.getServer();
+			Field privie = MinecraftServer.class.getDeclaredField("serverConfigManager");
+			privie.setAccessible(true);
+			privie.set(mc,new SCM_Wrapper(privie.get(mc)));
+		} catch (Exception e)
+		{ e.printStackTrace(); }
     }
 }
